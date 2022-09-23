@@ -1,0 +1,70 @@
+@import "_functions";
+
+
+// добавить единицы отображения css переменных и to-responsive()
+$_fix-scroll: true; // добавить функционал
+$_grid-fixed: true;
+$_fs: 16px;
+$variables: (
+  // add general line-height
+  // add global font-size
+  // mb add general text margin-bottom
+  // add bg-color
+  // add general color
+  // add transition
+  container: 1580px,
+  edge-padding: 15px,
+  font-size: (
+    base: $_fs, // body
+    h1: relative-unit(72px),
+    h2: relative-unit(32px),
+    h3: relative-unit(32px),
+    h4: relative-unit(25px),
+    h5: relative-unit(22px),
+    h6: relative-unit(20px),
+    h1_mobile: relative-unit(32px),
+    h2_mobile: relative-unit(22px),
+    h3_mobile: relative-unit(8px),
+    h4_mobile: relative-unit(14px),
+    h5_mobile: relative-unit(14px),
+    h6_mobile: relative-unit(4px),
+  ),
+  space: (
+    xxl: relative-unit(45px),
+    xl:  relative-unit(35px),
+    lg:  relative-unit(30px),
+    md:  relative-unit(25px),
+    sm:  relative-unit(20px),
+    xs:  relative-unit(15px),
+    micro-xxl: relative-unit(10px),
+  ),
+  // gap: (
+  //   sections: relative-font(140px),
+  //   blocks: relative-font(100px),
+  // ),
+  breakpoint: (
+    xs:  320px,
+  	sm:  576px,
+  	md:  768px,
+    // 500
+    // 600
+  	lg:  992px,
+  	xl:  1200px,
+  	xxl: 1400px,
+  ),
+  color: (
+    dark: #020101,
+    grey: #EBEBEB,
+    grey_dark: #C1C1C1,
+    blue: #1900B3,
+    blue_light: #0085FF,
+    today: #00A349,
+    white: #ffffff,
+    low_font: #82D2A5,
+    medium_font: #E2B48C,
+    high_font: #D58287,
+    low_bg: #DEEFE8,
+    medium_bg: #FBE3CE,
+    high_bg: #F9E7E7,
+  ),
+);
