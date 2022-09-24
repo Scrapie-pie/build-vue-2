@@ -56,33 +56,6 @@ export default {
 </script>
 
 <style lang="scss">
-.input {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  color: currentColor;
-  outline: none;
-  padding: 0;
-  border: none;
-
-  &[type="text"], &[type="password"], &[type="email"] {
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-    cursor: text;
-  }
-
-  &[type="checkbox"] {
-    $size: 16px;
-    background-color: transparent;
-    max-width:  $size;
-    max-height: $size;
-    min-width:  $size;
-    min-height: $size;
-    margin: 0;
-  }
-}
-
 .field {
   $field: &;
 
@@ -142,7 +115,7 @@ export default {
 
     #{$field}__fit {
       width: 100%;
-      height: 100%;
+      //height: 100%;
       overflow: hidden;
       position: relative;
     }
@@ -166,65 +139,5 @@ export default {
     }
   }
 
-  &__toggle {
-    .input {
-      display: none;
-    }
-
-    .input.checked ~ #{$field}__switcher {
-      &:before {
-        left: 100%;
-        transform: translateY(-50%) translateX(calc(-100% - 3px));
-      }
-    }
-
-    #{$field}__action {
-      @include flex-it(row, 12px, true);
-      padding: 10px 15px;
-      background-color: white;
-      border-radius: 4px;
-      width: min-content;
-    }
-
-    #{$field}__switcher {
-      width: 50px;
-      height: 20px;
-      border: 1px solid #BDD1E4;
-      border-radius: 12px;
-      position: relative;
-      cursor: pointer;
-
-      &:before {
-        transition: .35s ease-in-out;
-        content: '';
-        position: absolute;
-        min-width: 13px;
-        min-height: 13px;
-        max-width: 13px;
-        max-height: 13px;
-        background: #BDD1E4;
-        border-radius: 50%;
-        transform: translateY(-50%);
-        left: 3px;
-        top: 50%;
-      }
-    }
-
-    #{$field}__state {
-      font-size: 18px;
-    }
-  }
-
-  &__date {
-    input {
-      max-width: 130px;
-    }
-  }
-
-  &__time {
-    input {
-      max-width: 75px;
-    }
-  }
 }
 </style>

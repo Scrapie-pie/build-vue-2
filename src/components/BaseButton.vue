@@ -1,6 +1,7 @@
 <template>
   <button class="button" :class="postClass">
-    <slot></slot>
+    <slot name="icon" />
+    <slot />
   </button>
 </template>
 
@@ -8,10 +9,15 @@
 
 export default {
   name: 'BaseButton',
+  data() {
+    return {
+
+    }
+  },
   props: {
     subClass: {
       type: String,
-      validator: (value) => ['primary','arrow'].includes(value),
+      validator: (value) => ['primary', 'arrow'].includes(value),
       default: 'primary'
     }
   },

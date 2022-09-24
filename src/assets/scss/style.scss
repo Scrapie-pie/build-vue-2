@@ -110,23 +110,17 @@ div[class$="__container"] {
 }
 
 input, select {
-  @include h(5);
-  padding: 10px 15px;
-  background: get-var(color, grey);
-  border: 1px solid get-var(color, grey_dark);
-  border-radius: 8px;
-  outline: none;
+
 }
 
 input {
+  outline: none;
+  border: none;
   &[type="date"] {
-    color: rgba(0, 0, 0, 0.3);
-    max-width: 220px;
-    width: 100%;
+
   }
   &[type="text"] {
-    max-width: 490px;
-    width: 100%;
+
   }
   &::placeholder {
     color: rgba(0, 0, 0, 0.3);
