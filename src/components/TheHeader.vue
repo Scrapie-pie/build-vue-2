@@ -1,17 +1,28 @@
 <template>
   <header class="header">
 
-    <InputSearch></InputSearch>
-    <BaseButton>
+    <!-- <InputSearch></InputSearch> -->
+    <!-- <BaseButton>
       <template #icon><IconAdd class="icon icon-add"/></template>
       Добавить
-    </BaseButton>
+    </BaseButton> -->
+    qwe
+    <!-- <BaseIconTest icon="add"></BaseIconTest> -->
+    <VIcon name="arrow-type-1-vector"></VIcon>
+    <!-- <BaseIcon icon="add"></BaseIcon> -->
+
+    <!-- <ScalebleIcon icon="search"></ScalebleIcon> -->
+
 
   </header>
 </template>
 
 <script>
 import InputSearch from './InputSearch.vue';
+//import ScalebleIcon from './ScalebleIcon.vue';
+import VIcon from './VIcon.vue';
+import BaseIconTest from './BaseIconTest.vue';
+//import BaseIcon from './BaseIcon.vue';
 import BaseButton from './BaseButton.vue';
 import IconAdd from '../assets/icons/add.svg';
 // import BaseField from './BaseField.vue';
@@ -20,7 +31,11 @@ export default {
   components: {
     InputSearch,
     BaseButton,
-    IconAdd
+    IconAdd,
+    BaseIconTest,
+    VIcon,
+    //BaseIcon
+    //ScalebleIcon
     //BaseField
   }
 }

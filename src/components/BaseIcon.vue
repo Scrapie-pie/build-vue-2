@@ -3,9 +3,9 @@
 </template>
 
 <script>
-//const folderPath = '~/src/icons/actualtest/';
-const icons = require('~/src/icons/actualtest/generated/names.json');
-import '~/src/icons/actualtest/generated/style.css';
+//const folderPath = '../assets/icons/';
+const icons = require('../assets/icons/generated/names.json');
+import '../assets/icons/generated/style.css';
 export default {
   name: 'BaseIcon',
   props: {
@@ -17,7 +17,7 @@ export default {
   components: {
     ...Object.fromEntries(icons.map(icon => [
       toComponentName(icon),
-      () => import(`~/src/icons/actualtest/${icon}.svg`)
+      () => import(`../assets/icons/${icon}.svg`)
     ]))
   },
   computed: {

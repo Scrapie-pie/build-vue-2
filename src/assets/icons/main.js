@@ -1,35 +1,77 @@
 const fs = require('fs');
 const path = require('path');
 
+// свойства файла оттуда размер вытягивать
+
 const folder = './';
+const iconNames = [];
 
-let iconNames = [];
+main();
 
-fs.readdirSync(folder).forEach(file => {
-  // Сначала проверять что папки generated нет
+async function main() {
+
+
   try {
     fs.mkdirSync(folder + 'generated');
   } catch(e) {
-
   }
 
-  // добавлять только новые, мб еще new Set() нужен, но врятли
+  fs.readdirSync(folder).forEach(file => {
+  let isSvgFile = /.svg$/.test(file);
 
 
-  if (/.svg$/.test(file)) {
-    let filePath = folder + file;
+  if (isSvgFile) {
+    //let filePath = folder + file;
+    let iconName = file.replace(/.svg$/, '');
 
-    iconNames.push(file.replace(/.svg$/, ''))
+    // fs.readFile(folder + 'generated.json', 'utf8', (err, content) => {
+    //   let names = JSON.parse(content);
+    //   console.log(names)
+    // });
+
+    iconNames.push(iconName);
     //normalizeFill(filePath) // replace on promise ?
     // педеравать контент вместо открытиев файла или -> fs.open fs.write fs.close <-
-    let sizes = cutSize(file);
+    //let size = cutSize(file);
+    //
+    //
+    //
+    //console.log(size)
+    //
+    // if (size) {
+    //   addSizeToCSS(file, null, size.width, size.height);
+
+
+
+    svgHandler(file)
+
+
+
+
   } else {
   }
-});
+  });
+}
+
+
 
 fs.writeFile(folder + '/generated/names.json', JSON.stringify(iconNames), (err) => {
   if (err) throw err;
 });
+
+async function svgHandler(file) {
+  let size = await cutSize(file);
+
+  if (size) {
+    console.log(size.height)
+    let cssRow = getSvgCssRow(file, size.width, size.height);
+
+    fs.appendFile(folder + 'generated/style.css', cssRow, (err) => {
+      if (err) throw err;
+    });
+  }
+}
+
 
 function normalizeFill(file) {
   fs.readFile(file, 'utf8', (err, content) => {
@@ -66,67 +108,55 @@ function normalizeStroke() {
 
 }
 
-function cutSize(file) {
-  fs.readFile(folder + file, 'utf8', (err, content) => {
-    if (err) throw err;
-
-    let svgRow = content.match(/^<svg.+>/)[0]; // replace on func regexp with param content | тут сразу до индекса проверка
-    let regexp = /(width|height)=(['"])\S*\2/g;
-    let entries = svgRow.match(regexp).map(attr => attr.split('=')); // и тут
-
-    let newContent = content.replace(regexp, '');
-    svgRow = newContent.match(/^<svg.+>/)[0]
-    svgRow = svgRow.replace(/\s+/, ' ')
-
-    newContent = newContent.replace(/<svg.+>/, svgRow);
-
-    console.log(newContent)
-
-    fs.writeFile(folder + file, newContent, (err) => {
+async function cutSize(file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(folder + file, 'utf8', (err, content) => {
       if (err) throw err;
+
+      let svgRegexp = /<svg[^>]+>/;
+      let svgMatched = content.match(svgRegexp);
+
+      if (!svgMatched) return;
+
+      let svgRow = svgMatched[0];
+      let sizeRegexp = /(width|height)=(['"])\S*\2/g;
+      let sizeRow = svgRow.match(sizeRegexp);
+
+      if (!sizeRow) return;
+
+      let sizeEntries = sizeRow.map(attr => attr.split('='));
+      let newSvgRow = svgRow.replace(sizeRegexp, '');
+      let newContent = content
+        .replace(svgRow, newSvgRow)
+        .replace(/\s{2,}/, ' ');
+
+      let size = Object.fromEntries(sizeEntries.map(entrie => {
+        return [entrie[0], entrie[1].replace(/['"]/g, '')]
+      }));
+
+      fs.writeFile(folder + file, newContent, (err) => {
+        if (err) throw err;
+      });
+
+      resolve(size)
     });
-
-
-
-
-    entries = entries.map(entrie => { // replace on size obj
-      return [
-        entrie[0],
-        entrie[1].replace(/['"]/g, '')
-      ]
-    });
-
-    let { width, height } = Object.fromEntries(entries);
-
-
-    let styleRow = () => {
-      let result = `.icon_${file.replace(/.\w+$/i, '')} {\n`;
-
-      if (width) {
-        result += `  font-size: ${width}px;\n  width: 1em;\n`
-      }
-      if (height) {
-        let relativeHeight = height/width;
-        relativeHeight = parseFloat(relativeHeight.toFixed(5)) + 'em';
-        result += `  height: ${relativeHeight};\n`
-      } else {
-        throw new Error("Can't be parsed")
-      }
-
-      result += '}\n\n';
-
-      return result;
-    };
-
-
-    // fs.appendFile(folder + 'generated/style.css', styleRow(), (err) => {
-    //   if (err) throw err;
-    // });
-
-    return {width, height}
   });
 }
 
-function compareWidthStyleForSelectors() {
+function getSvgCssRow(svgFile, width, height) {
+  let result = `.icon_${svgFile.replace(/.\w+$/i, '')} {\n`;
 
+  if (width) {
+    result += `  font-size: ${width}px;\n  width: 1em;\n`
+  }
+
+  if (height) {
+    let relativeHeight = height/width;
+    relativeHeight = parseFloat(relativeHeight.toFixed(5)) + 'em';
+    result += `  height: ${relativeHeight};\n`
+  }
+
+  result += '}\n\n';
+
+  return result;
 }
