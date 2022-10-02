@@ -72,6 +72,9 @@ async function svgHandler(file) {
   }
 }
 
+function addCssVariables(file) {
+  
+}
 
 function normalizeFill(file) {
   fs.readFile(file, 'utf8', (err, content) => {

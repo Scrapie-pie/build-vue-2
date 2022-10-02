@@ -8,8 +8,8 @@
     </BaseButton> -->
     qwe
     <!-- <BaseIconTest icon="add"></BaseIconTest> -->
-    <VIcon name="arrow-type-1-vector"></VIcon>
-    <!-- <BaseIcon icon="add"></BaseIcon> -->
+    <!-- <VIcon name="arrow-type-1-vector"></VIcon> -->
+    <BaseIcon icon="arrow-type-1-vector"></BaseIcon>
 
     <!-- <ScalebleIcon icon="search"></ScalebleIcon> -->
 
@@ -20,9 +20,9 @@
 <script>
 import InputSearch from './InputSearch.vue';
 //import ScalebleIcon from './ScalebleIcon.vue';
-import VIcon from './VIcon.vue';
-import BaseIconTest from './BaseIconTest.vue';
-//import BaseIcon from './BaseIcon.vue';
+//import VIcon from './VIcon.vue';
+//import BaseIconTest from './BaseIconTest.vue';
+import BaseIcon from './BaseIcon.vue';
 import BaseButton from './BaseButton.vue';
 import IconAdd from '../assets/icons/add.svg';
 // import BaseField from './BaseField.vue';
@@ -32,9 +32,9 @@ export default {
     InputSearch,
     BaseButton,
     IconAdd,
-    BaseIconTest,
-    VIcon,
-    //BaseIcon
+    //BaseIconTest,
+    //VIcon,
+    BaseIcon
     //ScalebleIcon
     //BaseField
   }
